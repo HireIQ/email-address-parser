@@ -20,15 +20,15 @@ class EmailAddress:
 
 
 class EmailAddressParser:
-    def __init__(self, additional_tokens=None):
+    def __init__(self, bad_tokens=None):
         self._splitter = re.compile("\s")
         self._splitter_tokens = ["<", ">", "\"", "'", ",", " "]
 
-        if additional_tokens is not None:
+        if bad_tokens is not None:
             # Only accept lists or tuples of strings as additional tokens, if they give us something else: ignore it.
-            if isinstance(additional_tokens, list) or isinstance(additional_tokens, tuple):
-                additional_tokens = list(additional_tokens)
-                for token in additional_tokens:
+            if isinstance(bad_tokens, list) or isinstance(bad_tokens, tuple):
+                bad_tokens = list(bad_tokens)
+                for token in bad_tokens:
                     if isinstance(token, basestring):  # basestring because we care about both unicode and str
                         self._splitter_tokens.append(str(token))
 

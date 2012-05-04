@@ -15,11 +15,11 @@ To use:
     emails = email_address_parser.parse(some_email_list)
 
 
-Alternatively, you can instantiate your own with a list of additional bad characters you want stripped from names:
+Alternatively, you can instantiate your own with a list of additional bad tokens you want stripped from names:
 
     from eparser.parsers import EmailAddressParser 
     
-    parser = EmailAddressParser(additional_tokens=";")
+    parser = EmailAddressParser(bad_tokens=";")
     
     emails = parser.parse(some_email_list)
 
