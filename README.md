@@ -1,6 +1,8 @@
 email-address-parser
 ====================
 
+Thanks to Rob Forman (https://github.com/robforman) and Ben Olive (https://github.com/sionide21) for helping come up with the general process for parsing.
+
 Parse email addresses from an outlook-like "To:" field.
 
 The nice thing about this parser is you could give it a ridiculously jacked up list of emails: no commas, no names, names and emails stuck together (no spaces), and it'll still parse that string and give you a pretty list back.
