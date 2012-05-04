@@ -15,6 +15,9 @@ class EmailAddress:
             return "\"%s\" <%s>" % (self.name, self.email)
         return "<%s>" % self.email
 
+    def __repr__(self):
+        return "'%s'" % self.__str__()
+
     def __unicode__(self):
         return unicode(self.__str__())
 

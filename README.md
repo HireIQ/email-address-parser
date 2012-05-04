@@ -19,7 +19,7 @@ Alternatively, you can instantiate your own with a list of additional bad tokens
 
     from eparser.parsers import EmailAddressParser 
     
-    parser = EmailAddressParser(bad_tokens=";")
+    parser = EmailAddressParser(bad_tokens=[";"])
     
     emails = parser.parse(some_email_list)
 
