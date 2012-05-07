@@ -51,7 +51,7 @@ class EmailAddressParser:
         """
         parsed_addresses = []
         if isinstance(emails, basestring):
-            name_stack, _emails = [], self._splitter.split(emails)
+            name_stack, _emails = [], self._splitter.split(str(emails))
             _emails = filter(lambda token: token != "" and token != u"", _emails)  # Ignore noise.
             for part in _emails:
                 m = re.search(EMAIL_RE, part)
@@ -60,10 +60,22 @@ class EmailAddressParser:
                 else:
                     name, _email = "", m.group(0)
 
+                    left_over = part.split(_email)
+
+                    if len(left_over) > 0:  # When there are no spaces inbetween anything.
+                        cleaned = self._remove_tokens(left_over[0])
+                        if cleaned is not None and cleaned != "":
+                            name_stack.append(cleaned)
+
                     # Pop the name off of our stack.
                     while len(name_stack) > 0:
                         name = "%s %s" % (name_stack.pop(), name)
                     name = name[:len(name) - 1]  # strip out the trailing space.
+
+                    if len(left_over) > 1:
+                        cleaned = self._remove_tokens(left_over[1])
+                        if cleaned is not None and cleaned != "":
+                            name_stack.append(cleaned)
 
                     # In theory, "part" is just the email now, but the regex got it reliably. Why would we junk that?
                     if as_unicode:

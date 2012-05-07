@@ -40,3 +40,19 @@ class TestEmailAddressParser(unittest.TestCase):
         self.failIf(pairs[2].name != "Foo B.")
 
         self.failIf(pairs[3].name != "")
+
+    def test_edge_cases(self):
+        emails = '"Foo Bar"<foo@bar.com>,"Bar Baz"<bar@baz.org>,"Bar Baz"<bar@baz.org>'
+        pairs = self.parser.parse(emails)
+
+        self.failIf(pairs[0].name != "Foo Bar")
+
+        self.failIf(pairs[0].email != "foo@bar.com")
+
+        self.failIf(pairs[1].name != "Bar Baz")
+
+        self.failIf(pairs[1].email != "bar@baz.org")
+
+        self.failIf(pairs[2].name != "Bar Baz")
+
+        self.failIf(pairs[2].email != "bar@baz.org")
