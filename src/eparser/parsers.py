@@ -26,6 +26,7 @@ class EmailAddressParser:
     def __init__(self, bad_tokens=None):
         self._splitter = re.compile("\s")
         self._splitter_tokens = ["<", ">", "\"", "'", ",", " "]
+        self._email_re = re.compile(EMAIL_RE, re.IGNORECASE)
 
         if bad_tokens is not None:
             # Only accept lists or tuples of strings as additional tokens, if they give us something else: ignore it.
@@ -47,14 +48,13 @@ class EmailAddressParser:
         """Parses email addresses from a string or unicode list.
 
         Allows you to specify whether your returned list of email/name combos are unicode or regular strings.
-
         """
         parsed_addresses = []
         if isinstance(emails, basestring):
             name_stack, _emails = [], self._splitter.split(str(emails))
             _emails = filter(lambda token: token != "" and token != u"", _emails)  # Ignore noise.
             for part in _emails:
-                m = re.search(EMAIL_RE, part)
+                m = self._email_re.search(part)
                 if m is None:  # I know this looks a bit confusing, but it's this is part of a name, not an email.
                     name_stack.append(self._remove_tokens(part, leave=","))
                 else:

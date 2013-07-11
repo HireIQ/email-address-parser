@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name="eparser",
-    version="0.0.2",
+    version="1.0.0",
     description="Generic Email-Address List Parser",
     url="https://github.com/HireIQ/email-address-parser",
     author="Alex Milstead",
@@ -11,6 +11,5 @@ setup(
     license="MIT License",
     package_dir={"": "src"},
     packages = ["eparser"],
-    py_modules=["parsers"],
     install_requires=[ ]
 )
