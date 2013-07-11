@@ -44,13 +44,11 @@ class EmailAddressParser:
                 cleaned = cleaned.replace(token, "")
         return cleaned
 
-    def parse(self, emails, as_unicode=False, no_uppercase_in_emails=False):
+    def parse(self, emails, as_unicode=False):
         """Parses email addresses from a string or unicode list.
 
         Allows you to specify whether your returned list of email/name combos are unicode or regular strings.
         """
-        if no_uppercase_in_emails:
-            self._email_re = re.compile(EMAIL_RE)
         parsed_addresses = []
         if isinstance(emails, basestring):
             name_stack, _emails = [], self._splitter.split(str(emails))
