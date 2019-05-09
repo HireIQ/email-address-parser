@@ -1,3 +1,4 @@
+from six import python_2_unicode_compatible, string_types, text_type
 import re
 
 
@@ -5,6 +6,7 @@ import re
 EMAIL_RE = '''[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?'''
 
 
+@python_2_unicode_compatible
 class EmailAddress:
     def __init__(self, name, email):
         self.name = name
@@ -18,9 +20,6 @@ class EmailAddress:
     def __repr__(self):
         return "'%s'" % self.__str__()
 
-    def __unicode__(self):
-        return unicode(self.__str__())
-
 
 class EmailAddressParser:
     def __init__(self, bad_tokens=None):
@@ -33,7 +32,7 @@ class EmailAddressParser:
             if isinstance(bad_tokens, list) or isinstance(bad_tokens, tuple):
                 bad_tokens = list(bad_tokens)
                 for token in bad_tokens:
-                    if isinstance(token, basestring):  # basestring because we care about both unicode and str
+                    if isinstance(token, string_types):  # basestring because we care about both unicode and str
                         self._splitter_tokens.append(str(token))
 
     def _remove_tokens(self, section, leave=None):
@@ -50,7 +49,7 @@ class EmailAddressParser:
         Allows you to specify whether your returned list of email/name combos are unicode or regular strings.
         """
         parsed_addresses = []
-        if isinstance(emails, basestring):
+        if isinstance(emails, string_types):
             name_stack, _emails = [], self._splitter.split(str(emails))
             _emails = filter(lambda token: token != "" and token != u"", _emails)  # Ignore noise.
             for part in _emails:
@@ -79,8 +78,8 @@ class EmailAddressParser:
 
                     # In theory, "part" is just the email now, but the regex got it reliably. Why would we junk that?
                     if as_unicode:
-                        name = unicode(name)
-                        _email = unicode(_email)
+                        name = text_type(name)
+                        _email = text_type(_email)
                     pair = EmailAddress(name, _email)
                     parsed_addresses.append(pair)
         return parsed_addresses

@@ -11,5 +11,5 @@ setup(
     license="MIT License",
     package_dir={"": "src"},
     packages = ["eparser"],
-    install_requires=[ ]
+    install_requires=["six",]
 )
